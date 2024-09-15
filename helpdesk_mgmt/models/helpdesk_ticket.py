@@ -118,6 +118,8 @@ class HelpdeskTicket(models.Model):
     )
     active = fields.Boolean(default=True)
     is_task_created = fields.Boolean(string='Is Task Created', default=False)
+    lead_id = fields.Many2one('crm.lead', string="Related Lead")
+
 
     def name_get(self):
         res = []
@@ -140,10 +142,12 @@ class HelpdeskTicket(models.Model):
                     'description': item.description,
                     'type_of_registration': 'individual',
                     'company_id': item.company_id.id,
+                    'type': 'lead',
                 }
 
                 if vals:
-                    self.env['crm.lead'].sudo().create(vals)
+                    lead = self.env['crm.lead'].sudo().create(vals)
+                    item.lead_id = lead.id
 
 
     @api.onchange("partner_id")

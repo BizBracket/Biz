@@ -139,6 +139,7 @@
                      <button name="create_lead_button"
                         string="Convert to Lead"
                         type="object"
+                        attrs="{'invisible' : [('lead_id', '!=', False)]}"
                         class="oe_highlight"/>
 
                     <button
@@ -183,6 +184,7 @@
                             <field name="team_id" options='{"always_reload": True}' />
                             <field name="user_ids" invisible="1" readonly="1" />
                             <field name="user_id" options='{"always_reload": True}' />
+                            <field name="lead_id" attrs="{'invisible': [('lead_id', '=', False)]}" string="Related Lead"/>
                             <field name="priority" widget="priority" />
                             <field
                                 name="company_id"
