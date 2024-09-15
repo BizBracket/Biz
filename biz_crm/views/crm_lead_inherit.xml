@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="crm_lead_view_form_inherit_biz" model="ir.ui.view">
+        <field name="name">crm.lead.view.form.inherit.biz</field>
+        <field name="model">crm.lead</field>
+        <field name="inherit_id" ref="crm.crm_lead_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='tag_ids']" position="after">
+                <field name="business_name"/>
+                <field name="interest"/>
+                <field name="level_of_contact"/>
+                <field name="industry"/>
+                <field name="hear_about_us"/>
+                <field name="type_of_registration"/>
+                <field name="membership_id"/>
+
+            </xpath>
+        </field>
+    </record>
+    <record id="crm_lead_user_membership_type_form_view" model="ir.ui.view">
+        <field name="name">user.membership.type.view.form</field>
+        <field name="model">user.membership.type</field>
+        <field name="arch" type="xml">
+            <form string="Membership">
+                <field name="name"/>
+                <field name="annual_subscription"/>
+            </form>
+        </field>
+    </record>
+    <record id="crm_lead_user_membership_type_tree_view" model="ir.ui.view">
+        <field name="name">user.membership.type.view.tree</field>
+        <field name="model">user.membership.type</field>
+        <field name="arch" type="xml">
+            <tree string="Membership">
+                <field name="name"/>
+                <field name="annual_subscription"/>
+
+            </tree>
+        </field>
+    </record>
+
+    <record id="action_user_membership_view" model="ir.actions.act_window">
+        <field name="name">User Membership</field>
+        <field name="res_model">user.membership.type</field>
+        <field name="view_id" ref="biz_crm.crm_lead_user_membership_type_tree_view"/>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+            Create a new Membership here!
+            </p>
+        </field>
+    </record>
+
+    <menuitem id="menu_user_membership_view"
+                action="action_user_membership_view"
+                name="User Membership"
+                parent="crm.crm_menu_config"
+                sequence="2"/>
+</odoo>
