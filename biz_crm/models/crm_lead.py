@@ -1,19 +1,11 @@
-# Copyright 2020 VERTS
-# https://www.verts.co.in
-
 from odoo import api, fields, tools, models,_
 from odoo.exceptions import UserError, ValidationError
-from datetime import datetime,date
-import re
 from odoo import http
 from odoo.http import request, Response
 from odoo.http import request,serialize_exception
 from odoo.addons.web.controllers.main import ExcelExport
 from odoo.exceptions import ValidationError
 from odoo import api, models, fields, _
-import werkzeug
-import json
-from lxml import etree
 
 
 
@@ -269,6 +261,7 @@ class CrmLeadInherit(models.Model):
 
     business_name = fields.Char("Business Name")
     membership_id = fields.Many2one('user.membership.type', 'Membership')
+    branch_id = fields.Many2one('branch.master', 'Branch')
 
     def create_customer(self):
         if self:
