@@ -12,11 +12,14 @@
     'author': '',
     'website': '',
     'depends': [
-        'base','crm'],
+        'base','crm', 'sale'],
     'data': [
         "security/ir.model.access.csv",
+        "security/security.xml",
         "data/mailtemplate.xml",
         "views/crm_lead_inherit.xml",
+        "views/branch_view.xml",
+        "views/sale_order_view.xml"
     ],
     'installable': True,
     'auto_install': False,

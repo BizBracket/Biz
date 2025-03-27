@@ -13,8 +13,11 @@
                 <field name="hear_about_us"/>
                 <field name="type_of_registration"/>
                 <field name="membership_id"/>
-
             </xpath>
+            <xpath expr="//field[@name='phone']" position="after">
+                <field name="branch_id"/>
+            </xpath>
+
         </field>
     </record>
     <record id="crm_lead_user_membership_type_form_view" model="ir.ui.view">

@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+		<record id="branch_master_tree_view" model="ir.ui.view">
+			<field name="name">branch.master</field>
+			<field name="model">branch.master</field>
+			<field name="arch" type="xml">
+				<tree string="Branch Master Tree">
+					<field name="name"/>
+					<field name="company_id"/>
+					<field name="description"/>
+				</tree>
+			</field>
+		</record>
+		<record id="branch_master_form_view" model="ir.ui.view">
+			<field name="name">branch.master</field>
+			<field name="model">branch.master</field>
+			<field name="arch" type="xml">
+				<form string="Branch Master form">
+						<sheet>
+							<field name="logo_branch" widget='image' class="oe_avatar"/>
+							<div class="oe_title">
+								<label for="name" class="oe_edit_only"/>
+								<h1>
+									<field name="name" placeholder="Branch Name"/>
+								</h1>
+								<field name='branch_code' force_save="1" readonly="1"/>
+							</div>
+							<group>
+								<group>
+									<field name="company_id" readonly="1" invisible="1" force_save="1" options="{'no_create': True, 'no_open': True}"/>
+									<label for="street" string="Address"/>
+									<div class="o_address_format">
+										<field name="street" placeholder="Street..." class="o_address_street"/>
+										<field name="street2" placeholder="Street 2..." class="o_address_street"/>
+										<field name="city_id" placeholder="City"
+											   context="{'country_id': country_id, 'state_id' : state_id}"
+											   options="{'no_create': True, 'no_open': True}" class="o_address_city"/>
+										<field name="state_id" class="o_address_state"
+											   placeholder="State" options="{'no_create': True, 'no_open': True}"
+											   context="{'country_id': country_id}"
+										/>
+										<field name="zip_id" placeholder="Pin Code"  class="o_address_zip"
+											   context="{'country_id': country_id, 'city_id' : city_id}"
+										/>
+										<field name="country_id" placeholder="Country" class="o_address_country" options="{'no_create': True, 'no_open': True}"/>
+									</div>
+									<field name="description"/>
+								</group>
+								<group>
+									<field name="branch_code_prefix" required="0"/>
+									<field name="email"/>
+									<field name="website" widget="url" placeholder="e.g. www.odoo.com"/>
+									<field name="phone"/>
+									<field name='pan_no' invisible="1"/>
+									<field name='cin_no' invisible="1"/>
+									<field name='gstin_no'/>
+									<field name='branch_format'/>
+								</group>
+							</group>
+		                </sheet>
+					</form>
+			</field>
+		</record>
+		<record id="action_branch_master1" model="ir.actions.act_window">
+			<field name="name">Branch Master</field>
+			<field name="res_model">branch.master</field>
+			<field name="view_id" ref="branch_master_tree_view"/>
+			<field name="view_mode">tree,form</field>
+		</record>
+		<menuitem name="Branch Master"
+            id="branch_master_sub_sub_menu"
+            parent="base.menu_users" action="action_branch_master1" sequence="10"/>
+
+
+	<record id="res_users_view_form_inherit_for_branch" model="ir.ui.view">
+			<field name="name">res.users.form.inherit</field>
+			<field name="model">res.users</field>
+			<field name="inherit_id" ref="base.view_users_form" />
+			<field name="arch" type="xml">
+				<xpath expr="//field[@name='login']" position="after">
+					<label for="branch_ids" class="oe_edit_only" />
+					<field name="branch_ids" widget="many2many_tags" options="{'no_create': True}" />
+				</xpath>
+			</field>
+		</record>
+
+	<record id="areas_basic_master_tree_view" model="ir.ui.view">
+			<field name="name">Areas</field>
+			<field name="model">areas.basic.masters</field>
+			<field name="arch" type="xml">
+				<tree string="Areas">
+					<field name="name" />
+					<field name="city_id" />
+					<field name="pin_code_id"/>
+				</tree>
+			</field>
+		</record>
+		<!-- ********** Areas form view ********** -->
+		<record id="areas_basic_master_form_view" model="ir.ui.view">
+			<field name="name">Areas</field>
+			<field name="model">areas.basic.masters</field>
+			<field name="arch" type="xml">
+				<form string="Areas">
+					<sheet>
+						<group col="4">
+							<field name="name" />
+							<field name="city_id"/>
+                            <field name="pin_code_id"/>
+						</group>
+					</sheet>
+				</form>
+			</field>
+		</record>
+		<!-- ********** Action Cities ********** -->
+		<record id="action_areas_basic_master" model="ir.actions.act_window">
+			<field name="name">Areas</field>
+			<field name="res_model">areas.basic.masters</field>
+			<field name="view_id" ref="areas_basic_master_tree_view"/>
+			<field name="view_mode">tree,form</field>
+		</record>
+
+
+	<!-- @@@@@@@@@@@@@menu Area -->
+	<menuitem name="Area Master"
+            id="area_master_sub_sub_menu"
+            parent="base.menu_users" action="action_areas_basic_master" sequence="11"/>
+
+
+	<record id="pin_code_master_tree_view" model="ir.ui.view">
+			<field name="name">Pin Code Master</field>
+			<field name="model">pin.code.master</field>
+			<field name="arch" type="xml">
+				<tree string="Pin Code Master Tree">
+					<field name="name"/>
+					<field name="area_id"/>
+					<field name="city_id"/>
+                    <field name="state_id"/>
+					<field name="country_id"/>
+				</tree>
+			</field>
+		</record>
+		<record id="pin_code_master_form_view" model="ir.ui.view">
+			<field name="name">Pin Code Master</field>
+			<field name="model">pin.code.master</field>
+			<field name="arch" type="xml">
+				<form string="Pin Code Master form">
+                    <sheet>
+						<group name="pin_code" col="4" colspan="4">
+							<field name="name"/>
+                            <field name="area_id"/>
+                            <field name="city_id"/>
+                            <field name="state_id"/>
+                            <field name="country_id"/>
+                        </group>
+                    </sheet>
+				</form>
+			</field>
+		</record>
+		<record id="action_pin_code_master" model="ir.actions.act_window">
+			<field name="name">Pin Code Master</field>
+			<field name="res_model">pin.code.master</field>
+			<field name="view_id" ref="pin_code_master_tree_view"/>
+			<field name="view_mode">tree,form</field>
+		</record>
+
+		<!-- @@@@@@@@@@@@@menu Pin -->
+	<menuitem name="Pin Master"
+            id="pin_master_sub_sub_menu"
+            parent="base.menu_users" action="action_pin_code_master" sequence="12"/>
+
+</odoo>
