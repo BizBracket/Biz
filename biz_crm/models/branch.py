@@ -32,6 +32,7 @@ class BranchMaster(models.Model):
 
     @api.onchange('zip_id')
     def on_change_zip_id(self):
+        print('hey')
         if self.zip_id:
             self.city_id = self.zip_id.city_id.id
             self.state_id = self.zip_id.state_id.id
