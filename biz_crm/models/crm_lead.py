@@ -141,12 +141,12 @@ class CrmLeadController(http.Controller):
 
                 # Updated 'vals' dictionary to include missing fields
                 vals = {
-                    'name': f"{data.get('first_name', '')} {data.get('last_name', '')}",
+                    'name': data.get('Business_name') or data.get('company_name') or f"{data.get('first_name', '')} {data.get('last_name', '')}",
                     'email_from': email,
                     'mobile': phone,
                     'street': f"{data.get('address', '')}, {data.get('city', '')}, {data.get('state', '')}, {data.get('country', '')},{data.get('postal_code', '')}",
                     'partner_name': data.get('company_name', ''),
-                    'business_name': data.get('business_name', ''),
+                    'business_name': data.get('Business_name', ''),
                     'function': function,
                     'industry': industry,
                     'interest': interest,
@@ -157,6 +157,7 @@ class CrmLeadController(http.Controller):
                     'level_of_contact': data.get('level_of_contact', '') ,  # Added level of contact
                     'hear_about_us': data.get('hear_about_us', ''),
                     'company_id':1,
+                    'contact_name':f"{data.get('first_name', '')} {data.get('last_name', '')}",
                 }
 
                 if vals:
