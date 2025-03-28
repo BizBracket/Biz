@@ -46,15 +46,15 @@ class Customer(models.Model):
     city_id = fields.Many2one(comodel_name='res.city', string='City')
     pin_code = fields.Many2one('pin.code.master', 'Zip')
 
-    @api.onchange('zip_id')
-    def on_change_zip_id(self):
-        if self.zip_id:
-            self.city_id = self.zip_id.city_id.id
-            self.state_id = self.zip_id.state_id.id
-            self.country_id = self.zip_id.country_id.id
-        elif self.city_id == None and self.zip_id == None:
+    @api.onchange('pin_code')
+    def on_change_pin_code(self):
+        if self.pin_code:
+            self.city_id = self.pin_code.city_id.id
+            self.state_id = self.pin_code.state_id.id
+            self.country_id = self.pin_code.country_id.id
+        elif self.city_id == None and self.pin_code == None:
             self.city_id = ""
-            self.zip_id = ""
+            self.pin_code = ""
             self.state_id = ""
             self.country_id = ""
 
@@ -64,14 +64,14 @@ class Customer(models.Model):
         if self.city_id:
             self.country_id = self.city_id.country_id
             self.state_id = self.city_id.state_id
-            if self.zip_id.city_id != self.city_id:
-                self.zip_id = None
-            res = {'domain': {'zip_id': [('city_id', '=', self.city_id.id)]}}
+            if self.pin_code.city_id != self.city_id:
+                self.pin_code = None
+            res = {'domain': {'pin_code': [('city_id', '=', self.city_id.id)]}}
         else:
             self.city_id = None
             self.country_id = None
             self.state_id = None
-            res = {'domain': {'zip_id': [(1, '=', 1)]}}
+            res = {'domain': {'pin_code': [(1, '=', 1)]}}
         return res
 
 
